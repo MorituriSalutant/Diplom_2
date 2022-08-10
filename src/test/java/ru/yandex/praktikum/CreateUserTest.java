@@ -3,7 +3,8 @@ package ru.yandex.praktikum;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
-import ru.yandex.praktikum.api.client.CreateUserClient;
+import ru.yandex.praktikum.api.client.CreateUserApiClient;
+import ru.yandex.praktikum.api.helpers.GenerateData;
 import ru.yandex.praktikum.api.pojo.CreateUserJson;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -11,19 +12,19 @@ import static org.hamcrest.CoreMatchers.equalTo;
 public class CreateUserTest {
 
     CreateUserJson createUserJson;
-    CreateUserClient createUserClient;
+    CreateUserApiClient createUserApiClient;
 
 
     @Before
     public void setUp() {
-        createUserJson = new CreateUserJson("a11s1d123312@asd.asd", "as1dfh1231", "as1das");
-        createUserClient = new CreateUserClient();
+        createUserApiClient = new CreateUserApiClient();
+        createUserJson = GenerateData.generateUserAccount();
 
     }
 
     @Test
     public void creationUserTest() {
-        Response response = createUserClient.createUser(createUserJson);
+        Response response = createUserApiClient.createUser(createUserJson);
 
         response.then()
                 .assertThat()
