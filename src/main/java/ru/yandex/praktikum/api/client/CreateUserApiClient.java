@@ -12,4 +12,16 @@ public class CreateUserApiClient extends RestAssuredClient {
                 .body(json)
                 .post("/auth/register");
     }
+
+    public Response authorization(CreateUserReqJson body) {
+        return reqSpec
+                .contentType(ContentType.JSON)
+                .body(body)
+                .post("/auth/login");
+    }
+
+    public void deleteUser(String token) {
+        reqSpec.header("Authorization", token)
+                .delete("/auth/user");
+    }
 }
