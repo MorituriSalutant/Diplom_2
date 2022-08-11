@@ -1,7 +1,7 @@
 package ru.yandex.praktikum.api.helpers;
 
 import com.github.javafaker.Faker;
-import ru.yandex.praktikum.api.pojo.CreateUserJson;
+import ru.yandex.praktikum.api.pojo.createUser.CreateUserReqJson;
 
 public class GenerateData {
     private static String email;
@@ -15,8 +15,8 @@ public class GenerateData {
         name = faker.name().username();
     }
 
-    public static CreateUserJson generateUserAccount(){
+    public static CreateUserReqJson generateUserAccount(){
         createAccountData();
-        return new CreateUserJson(email,password,name);
+        return new CreateUserReqJson(email,password,name);
     }
 }

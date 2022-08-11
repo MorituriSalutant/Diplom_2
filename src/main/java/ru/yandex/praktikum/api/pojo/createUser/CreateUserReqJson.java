@@ -1,14 +1,14 @@
-package ru.yandex.praktikum.api.pojo;
+package ru.yandex.praktikum.api.pojo.createUser;
 
-public class CreateUserJson {
+public class CreateUserReqJson {
     private String email;
     private String password;
     private String name;
 
-    public CreateUserJson() {
+    public CreateUserReqJson() {
     }
 
-    public CreateUserJson(String email, String password, String name) {
+    public CreateUserReqJson(String email, String password, String name) {
         this.email = email;
         this.password = password;
         this.name = name;

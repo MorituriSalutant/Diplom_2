@@ -5,13 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.yandex.praktikum.api.client.CreateUserApiClient;
 import ru.yandex.praktikum.api.helpers.GenerateData;
-import ru.yandex.praktikum.api.pojo.CreateUserJson;
+import ru.yandex.praktikum.api.pojo.createUser.CreateUserReqJson;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class CreateUserTest {
 
-    CreateUserJson createUserJson;
+    CreateUserReqJson createUserJson;
     CreateUserApiClient createUserApiClient;
 
 
