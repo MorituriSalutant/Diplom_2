@@ -4,28 +4,28 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.yandex.praktikum.api.client.CreateUserApiClient;
+import ru.yandex.praktikum.api.client.UserApiClient;
 import ru.yandex.praktikum.api.helpers.GenerateData;
-import ru.yandex.praktikum.api.pojo.createUser.CreateUserReqJson;
+import ru.yandex.praktikum.api.pojo.createUser.UserReqJson;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class CreateUserTest {
 
-    CreateUserReqJson createUserJson;
-    CreateUserApiClient createUserApiClient;
+    UserReqJson userReqJson;
+    UserApiClient userApiClient;
 
 
     @Before
     public void setUp() {
-        createUserApiClient = new CreateUserApiClient();
-        createUserJson = GenerateData.generateUserAccount();
+        userApiClient = new UserApiClient();
+        userReqJson = GenerateData.generateUserAccount();
 
     }
 
     @Test
     public void createSuccessUserTest() {
-        Response response = createUserApiClient.createUser(createUserJson);
+        Response response = userApiClient.createUser(userReqJson);
 
         response.then()
                 .assertThat()
@@ -35,8 +35,8 @@ public class CreateUserTest {
 
     @Test
     public void createUserWhoAlreadyExistTest(){
-        createUserApiClient.createUser(createUserJson); //Создали пользователя
-        Response response = createUserApiClient.createUser(createUserJson);//Повторно отправили запрос на создание
+        userApiClient.createUser(userReqJson); //Создали пользователя
+        Response response = userApiClient.createUser(userReqJson);//Повторно отправили запрос на создание
 
         response.then()
                 .assertThat()
@@ -48,8 +48,8 @@ public class CreateUserTest {
 
     @Test
     public void createUserWithoutEmailTest(){
-        createUserJson.setEmail(null); //Удалили почту
-        Response response = createUserApiClient.createUser(createUserJson);//Отправили запрос без почты
+        userReqJson.setEmail(null); //Удалили почту
+        Response response = userApiClient.createUser(userReqJson);//Отправили запрос без почты
 
         response.then()
                 .assertThat()
@@ -60,6 +60,6 @@ public class CreateUserTest {
 
     @After
     public void tearDown(){
-        GenerateData.deleteUserAccount();
+        GenerateData.deleteUserAccount(userReqJson);
     }
 }

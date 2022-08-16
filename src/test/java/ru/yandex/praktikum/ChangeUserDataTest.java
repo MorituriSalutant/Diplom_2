@@ -11,8 +11,7 @@ import ru.yandex.praktikum.api.pojo.createUser.UserReqJson;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-public class AuthUserTest {
-
+public class ChangeUserDataTest {
     UserApiClient userApiClient;
     UserReqJson userReqJson;
 
@@ -21,31 +20,31 @@ public class AuthUserTest {
         userApiClient = new UserApiClient();
         userReqJson = GenerateData.generateUserAccount();
         userApiClient.createUser(userReqJson);
+        userApiClient.authorization(userReqJson);
     }
 
     @Test
-    public void authorizationSuccessfulTest(){
-        Response response = userApiClient.authorization(userReqJson);
+    public void changeUserDataNameTest(){
+        userReqJson.setName(GenerateData.generateName());
+        Response response = userApiClient.changeDataUser(userReqJson);
 
         response.then()
                 .assertThat()
                 .statusCode(200)
-                .body("success",equalTo(true))
-                .body("accessToken",notNullValue())
-                .body("refreshToken",notNullValue());
+                .body("success", equalTo(true))
+                .body("user",notNullValue());
     }
 
     @Test
-    public void authorizationWithInvalidData(){
-        userReqJson.setName(GenerateData.generateName());
-        userReqJson.setPassword(GenerateData.generatePassword());
-        Response response = userApiClient.authorization(userReqJson);
+    public void changeUserDataEmailTest(){
+        userReqJson.setEmail(GenerateData.generateEmail());
+        Response response = userApiClient.changeDataUser(userReqJson);
 
         response.then()
                 .assertThat()
-                .statusCode(401)
-                .body("success",equalTo(false))
-                .body("message",equalTo("email or password are incorrect"));
+                .statusCode(200)
+                .body("success", equalTo(true))
+                .body("user",notNullValue());
     }
 
     @After

@@ -1,15 +1,15 @@
 package ru.yandex.praktikum.api.pojo.createUser;
 
-public class CreateUserResJson {
+public class UserResJson {
     private String success;
-    private CreateUserReqJson user;
+    private UserReqJson user;
     private String accessToken;
     private String refreshToken;
 
-    public CreateUserResJson() {
+    public UserResJson() {
     }
 
-    public CreateUserResJson(String success, CreateUserReqJson user, String accessToken, String refreshToken) {
+    public UserResJson(String success, UserReqJson user, String accessToken, String refreshToken) {
         this.success = success;
         this.user = user;
         this.accessToken = accessToken;
@@ -24,11 +24,11 @@ public class CreateUserResJson {
         this.success = success;
     }
 
-    public CreateUserReqJson getUser() {
+    public UserReqJson getUser() {
         return user;
     }
 
-    public void setUser(CreateUserReqJson user) {
+    public void setUser(UserReqJson user) {
         this.user = user;
     }
 
