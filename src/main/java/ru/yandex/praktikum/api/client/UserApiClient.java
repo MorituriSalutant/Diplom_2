@@ -34,6 +34,13 @@ public class UserApiClient extends RestAssuredClient {
                 .patch("/auth/user");
     }
 
+    public Response changeDataUserWithoutToken(UserReqJson body) {
+        return reqSpec
+                .contentType(ContentType.JSON)
+                .body(body)
+                .patch("/auth/user");
+    }
+
     public void deleteUser() {
         reqSpec.header("Authorization", token)
                 .delete("/auth/user");

@@ -9,9 +9,9 @@ public class GenerateData {
     private static String email;
     private static String password;
     private static String name;
+    private static final Faker faker = new Faker();
 
     private static void createUserData() {
-        Faker faker = new Faker();
         generateEmail();
         generatePassword();
         generateName();
@@ -22,25 +22,22 @@ public class GenerateData {
         return new UserReqJson(email, password, name);
     }
 
-    public static String generateEmail(){
-        Faker faker = new Faker();
+    public static String generateEmail() {
         return email = faker.internet().emailAddress();
     }
-    public static String generatePassword(){
-        Faker faker = new Faker();
+
+    public static String generatePassword() {
         return password = faker.internet().password();
     }
-    public static String generateName(){
-        Faker faker = new Faker();
+
+    public static String generateName() {
         return name = faker.name().username();
     }
-
 
     public static void deleteUserAccount(UserReqJson userReqJson) {
         UserApiClient userApiClient = new UserApiClient();
         Response responseAuth = userApiClient.authorization(userReqJson);
         if (responseAuth.statusCode() == 200) {
-            String token = responseAuth.then().extract().path("accessToken");
             userApiClient.deleteUser();
         } else {
             System.out.println("Пользователь создан не был");

@@ -16,7 +16,7 @@ public class ChangeUserDataTest {
     UserReqJson userReqJson;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         userApiClient = new UserApiClient();
         userReqJson = GenerateData.generateUserAccount();
         userApiClient.createUser(userReqJson);
@@ -24,7 +24,7 @@ public class ChangeUserDataTest {
     }
 
     @Test
-    public void changeUserDataNameTest(){
+    public void changeUserDataNameWithAuthTest() {
         userReqJson.setName(GenerateData.generateName());
         Response response = userApiClient.changeDataUser(userReqJson);
 
@@ -32,11 +32,11 @@ public class ChangeUserDataTest {
                 .assertThat()
                 .statusCode(200)
                 .body("success", equalTo(true))
-                .body("user",notNullValue());
+                .body("user", notNullValue());
     }
 
     @Test
-    public void changeUserDataEmailTest(){
+    public void changeUserDataEmailWithAuthTest() {
         userReqJson.setEmail(GenerateData.generateEmail());
         Response response = userApiClient.changeDataUser(userReqJson);
 
@@ -44,11 +44,35 @@ public class ChangeUserDataTest {
                 .assertThat()
                 .statusCode(200)
                 .body("success", equalTo(true))
-                .body("user",notNullValue());
+                .body("user", notNullValue());
+    }
+
+    @Test
+    public void changeUserDataNameWithoutAuthTest() {
+        userReqJson.setName(GenerateData.generateName());
+        Response response = userApiClient.changeDataUserWithoutToken(userReqJson);
+
+        response.then()
+                .assertThat()
+                .statusCode(401)
+                .body("success", equalTo(false))
+                .body("message", equalTo("You should be authorised"));
+    }
+
+    @Test
+    public void changeUserDataEmailWithoutAuthTest() {
+        userReqJson.setEmail(GenerateData.generateEmail());
+        Response response = userApiClient.changeDataUserWithoutToken(userReqJson);
+
+        response.then()
+                .assertThat()
+                .statusCode(401)
+                .body("success", equalTo(false))
+                .body("message", equalTo("You should be authorised"));
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         GenerateData.deleteUserAccount(userReqJson);
     }
 }
