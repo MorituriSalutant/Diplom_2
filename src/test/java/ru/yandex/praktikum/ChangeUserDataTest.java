@@ -1,12 +1,13 @@
 package ru.yandex.praktikum;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ru.yandex.praktikum.api.client.UserApiClient;
 import ru.yandex.praktikum.api.helpers.GenerateData;
-import ru.yandex.praktikum.api.pojo.createUser.UserReqJson;
+import ru.yandex.praktikum.api.pojo.user.UserReqJson;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -50,7 +51,7 @@ public class ChangeUserDataTest {
     @Test
     public void changeUserDataNameWithoutAuthTest() {
         userReqJson.setName(GenerateData.generateName());
-        Response response = userApiClient.changeDataUserWithoutToken(userReqJson);
+        Response response = userApiClient.clearAuthToken().changeDataUser(userReqJson);
 
         response.then()
                 .assertThat()
@@ -60,10 +61,12 @@ public class ChangeUserDataTest {
     }
 
     @Test
+    @DisplayName("Переделать")
     public void changeUserDataEmailWithoutAuthTest() {
+        String emailBefore = userReqJson.getEmail();
         userReqJson.setEmail(GenerateData.generateEmail());
-        Response response = userApiClient.changeDataUserWithoutToken(userReqJson);
-
+        Response response = userApiClient.clearAuthToken().changeDataUser(userReqJson);
+        userReqJson.setEmail(emailBefore);
         response.then()
                 .assertThat()
                 .statusCode(401)

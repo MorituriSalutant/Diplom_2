@@ -3,7 +3,7 @@ package ru.yandex.praktikum.api.helpers;
 import com.github.javafaker.Faker;
 import io.restassured.response.Response;
 import ru.yandex.praktikum.api.client.UserApiClient;
-import ru.yandex.praktikum.api.pojo.createUser.UserReqJson;
+import ru.yandex.praktikum.api.pojo.user.UserReqJson;
 
 public class GenerateData {
     private static String email;

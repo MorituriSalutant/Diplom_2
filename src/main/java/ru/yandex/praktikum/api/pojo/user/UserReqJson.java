@@ -1,4 +1,4 @@
-package ru.yandex.praktikum.api.pojo.createUser;
+package ru.yandex.praktikum.api.pojo.user;
 
 public class UserReqJson {
     private String email;

@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.yandex.praktikum.api.client.UserApiClient;
 import ru.yandex.praktikum.api.helpers.GenerateData;
-import ru.yandex.praktikum.api.pojo.createUser.UserReqJson;
+import ru.yandex.praktikum.api.pojo.user.UserReqJson;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
