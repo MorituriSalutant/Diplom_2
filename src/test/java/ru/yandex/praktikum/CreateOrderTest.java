@@ -23,8 +23,8 @@ public class CreateOrderTest {
 
     @Before
     public void setUp() {
-//        orderApiClient = new OrderApiClient();
-//        orderReqJson = GenerateOrder.createOrderJson();
+        orderApiClient = new OrderApiClient();
+        orderReqJson = GenerateOrder.createOrderJson();
     }
 
     @Test
@@ -68,7 +68,7 @@ public class CreateOrderTest {
     @Test
     @DisplayName("Создание заказа без ингредиентов")
     public void createOrderWithoutIngredientsTest() {
-        orderReqJson.setIngredients(new ArrayList<>());
+        orderReqJson.setIngredients(List.of());
         Response response = orderApiClient.createOrder(orderReqJson);
 
         response.then()
