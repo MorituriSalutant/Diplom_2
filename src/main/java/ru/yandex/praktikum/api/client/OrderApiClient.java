@@ -11,8 +11,8 @@ public class OrderApiClient extends RestAssuredClient {
     }
 
     public Response createOrder(OrderReqJson body) {
-
         return reqSpec
+                .header("Authorization", super.bearerToken)
                 .contentType(ContentType.JSON)
                 .body(body)
                 .post("/orders");

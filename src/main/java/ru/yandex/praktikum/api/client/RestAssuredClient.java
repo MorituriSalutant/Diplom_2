@@ -12,8 +12,13 @@ public class RestAssuredClient {
     protected static String BASE_URL = "https://stellarburgers.nomoreparties.site/api/";
     protected Filter req = new RequestLoggingFilter();
     protected Filter res = new ResponseLoggingFilter();
+    protected String bearerToken = "";
     protected RequestSpecification reqSpec = with()
-                    .filters(req, res)
-                    .filter(new AllureRestAssured())
-                    .baseUri(BASE_URL);
+            .filters(req, res)
+            .filter(new AllureRestAssured())
+            .baseUri(BASE_URL);
+
+    public void clearAuthToken() {
+        this.bearerToken = "";
+    }
 }

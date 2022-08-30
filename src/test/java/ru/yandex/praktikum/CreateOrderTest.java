@@ -2,15 +2,17 @@ package ru.yandex.praktikum;
 
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ru.yandex.praktikum.api.client.OrderApiClient;
+import ru.yandex.praktikum.api.client.UserApiClient;
+import ru.yandex.praktikum.api.helpers.GenerateData;
 import ru.yandex.praktikum.api.helpers.GenerateOrder;
 import ru.yandex.praktikum.api.pojo.order.OrderReqJson;
+import ru.yandex.praktikum.api.pojo.user.UserReqJson;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -20,11 +22,16 @@ public class CreateOrderTest {
 
     OrderReqJson orderReqJson;
     OrderApiClient orderApiClient;
+    UserApiClient userApiClient;
+    UserReqJson userReqJson;
 
     @Before
     public void setUp() {
         orderApiClient = new OrderApiClient();
+        userApiClient = new UserApiClient();
         orderReqJson = GenerateOrder.createOrderJson();
+        userReqJson = GenerateData.generateUserAccount();
+
     }
 
     @Test
@@ -42,6 +49,8 @@ public class CreateOrderTest {
     @Test
     @DisplayName("Создание заказа без авторизации")
     public void createOrderWitIngredientsTest() {
+        userApiClient.createUser(userReqJson);
+        userApiClient.clearAuthToken();
         Response response = orderApiClient.createOrder(orderReqJson);
 
         response.then()
@@ -55,6 +64,7 @@ public class CreateOrderTest {
     @Test
     @DisplayName("Создание заказа с авторизацией")
     public void createOrderWitIngredientsAndAuthTest() {
+        userApiClient.createUser(userReqJson);
         Response response = orderApiClient.createOrder(orderReqJson);
 
         response.then()
@@ -91,5 +101,9 @@ public class CreateOrderTest {
                 .body("message", equalTo("One or more ids provided are incorrect"));
     }
 
+    @After
+    public void tearDown(){
+        GenerateData.deleteUserAccount(userReqJson);
+    }
 
 }

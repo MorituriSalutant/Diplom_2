@@ -51,7 +51,8 @@ public class ChangeUserDataTest {
     @Test
     public void changeUserDataNameWithoutAuthTest() {
         userReqJson.setName(GenerateData.generateName());
-        Response response = userApiClient.clearAuthToken().changeDataUser(userReqJson);
+        userApiClient.clearAuthToken();
+        Response response = userApiClient.changeDataUser(userReqJson);
 
         response.then()
                 .assertThat()
@@ -61,12 +62,14 @@ public class ChangeUserDataTest {
     }
 
     @Test
-    @DisplayName("Переделать")
     public void changeUserDataEmailWithoutAuthTest() {
         String emailBefore = userReqJson.getEmail();
         userReqJson.setEmail(GenerateData.generateEmail());
-        Response response = userApiClient.clearAuthToken().changeDataUser(userReqJson);
+        userApiClient.clearAuthToken();
+
+        Response response = userApiClient.changeDataUser(userReqJson);
         userReqJson.setEmail(emailBefore);
+
         response.then()
                 .assertThat()
                 .statusCode(401)

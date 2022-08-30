@@ -17,26 +17,26 @@ public class AuthUserTest {
     UserReqJson userReqJson;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         userApiClient = new UserApiClient();
         userReqJson = GenerateData.generateUserAccount();
         userApiClient.createUser(userReqJson);
     }
 
     @Test
-    public void authorizationSuccessfulTest(){
+    public void authorizationSuccessfulTest() {
         Response response = userApiClient.authorization(userReqJson);
 
         response.then()
                 .assertThat()
                 .statusCode(200)
-                .body("success",equalTo(true))
-                .body("accessToken",notNullValue())
-                .body("refreshToken",notNullValue());
+                .body("success", equalTo(true))
+                .body("accessToken", notNullValue())
+                .body("refreshToken", notNullValue());
     }
 
     @Test
-    public void authorizationWithInvalidData(){
+    public void authorizationWithInvalidData() {
         userReqJson.setName(GenerateData.generateName());
         userReqJson.setPassword(GenerateData.generatePassword());
         Response response = userApiClient.authorization(userReqJson);
@@ -44,12 +44,12 @@ public class AuthUserTest {
         response.then()
                 .assertThat()
                 .statusCode(401)
-                .body("success",equalTo(false))
-                .body("message",equalTo("email or password are incorrect"));
+                .body("success", equalTo(false))
+                .body("message", equalTo("email or password are incorrect"));
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         GenerateData.deleteUserAccount(userReqJson);
     }
 }
