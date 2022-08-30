@@ -50,7 +50,7 @@ public class CreateOrderTest {
     @DisplayName("Создание заказа без авторизации")
     public void createOrderWitIngredientsTest() {
         userApiClient.createUser(userReqJson);
-        userApiClient.clearAuthToken();
+        userApiClient.clearToken();
         Response response = orderApiClient.createOrder(orderReqJson);
 
         response.then()

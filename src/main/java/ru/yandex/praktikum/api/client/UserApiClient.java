@@ -6,6 +6,7 @@ import ru.yandex.praktikum.api.pojo.user.UserReqJson;
 
 public class UserApiClient extends RestAssuredClient {
 
+
     public Response createUser(UserReqJson json) {
         Response response = reqSpec
                 .contentType(ContentType.JSON)
@@ -26,23 +27,27 @@ public class UserApiClient extends RestAssuredClient {
 
     public Response changeDataUser(UserReqJson body) {
         return reqSpec
-                .header("Authorization", super.bearerToken)
+                .header("Authorization", RestAssuredClient.getToken())
                 .contentType(ContentType.JSON)
                 .body(body)
                 .patch("/auth/user");
     }
 
     public void deleteUser() {
-        reqSpec.header("Authorization", super.bearerToken)
+        reqSpec.header("Authorization", RestAssuredClient.getToken())
                 .delete("/auth/user");
+    }
+
+    public void clearToken(){
+        RestAssuredClient.clearAuthToken();
     }
 
     private void extractToken(Response response) {
         if (response.statusCode() == 200) {
-            super.bearerToken = response.then().extract().body().path("accessToken");
-//            super.bearerToken = super.bearerToken.replace("Bearer ", "");
+            String token = response.then().extract().body().path("accessToken");
+            RestAssuredClient.setToken(token);
         } else {
-            clearAuthToken();
+            clearToken();
         }
 
     }

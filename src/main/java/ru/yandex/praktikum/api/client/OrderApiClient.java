@@ -6,15 +6,23 @@ import ru.yandex.praktikum.api.pojo.order.OrderReqJson;
 
 public class OrderApiClient extends RestAssuredClient {
 
+
     public Response getListIngredients() {
         return reqSpec.get("/ingredients");
     }
 
     public Response createOrder(OrderReqJson body) {
         return reqSpec
-                .header("Authorization", super.bearerToken)
+                .header("Authorization", token)
                 .contentType(ContentType.JSON)
                 .body(body)
                 .post("/orders");
+    }
+
+    public Response getOrders() {
+        return reqSpec
+                .header("Authorization", token)
+                .contentType(ContentType.JSON)
+                .get("/orders");
     }
 }
