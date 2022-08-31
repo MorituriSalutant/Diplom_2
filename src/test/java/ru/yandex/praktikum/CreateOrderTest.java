@@ -1,5 +1,6 @@
 package ru.yandex.praktikum;
 
+import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.After;
@@ -17,7 +18,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-@DisplayName("Создание заказа")
+@Feature("Создание заказа")
 public class CreateOrderTest {
 
     OrderReqJson orderReqJson;
@@ -51,6 +52,7 @@ public class CreateOrderTest {
     public void createOrderWitIngredientsTest() {
         userApiClient.createUser(userReqJson);
         userApiClient.clearToken();
+
         Response response = orderApiClient.createOrder(orderReqJson);
 
         response.then()
@@ -65,6 +67,7 @@ public class CreateOrderTest {
     @DisplayName("Создание заказа с авторизацией")
     public void createOrderWitIngredientsAndAuthTest() {
         userApiClient.createUser(userReqJson);
+
         Response response = orderApiClient.createOrder(orderReqJson);
 
         response.then()
@@ -79,6 +82,7 @@ public class CreateOrderTest {
     @DisplayName("Создание заказа без ингредиентов")
     public void createOrderWithoutIngredientsTest() {
         orderReqJson.setIngredients(List.of());
+
         Response response = orderApiClient.createOrder(orderReqJson);
 
         response.then()
@@ -92,6 +96,7 @@ public class CreateOrderTest {
     @DisplayName("Создание заказа с неверным айди ингредиентов")
     public void createOrderWithoutBadIdIngredientsTest() {
         orderReqJson.setIngredients(List.of("61c0c5a71d1f82001bdbaa6d"));
+
         Response response = orderApiClient.createOrder(orderReqJson);
 
         response.then()

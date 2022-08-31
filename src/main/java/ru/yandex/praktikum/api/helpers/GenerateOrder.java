@@ -1,5 +1,6 @@
 package ru.yandex.praktikum.api.helpers;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import ru.yandex.praktikum.api.client.OrderApiClient;
 import ru.yandex.praktikum.api.pojo.order.DataJson;
@@ -23,6 +24,7 @@ public class GenerateOrder {
         rndData.forEach((x) -> listOfIngredients.add(x.get_id()));
     }
 
+    @Step("Создание JSON заказа Ингредиенты")
     public static OrderReqJson createOrderJson() {
         getIdIngredients();
         return new OrderReqJson(listOfIngredients);

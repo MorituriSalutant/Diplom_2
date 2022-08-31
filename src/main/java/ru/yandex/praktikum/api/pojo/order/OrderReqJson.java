@@ -1,6 +1,5 @@
 package ru.yandex.praktikum.api.pojo.order;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderReqJson {

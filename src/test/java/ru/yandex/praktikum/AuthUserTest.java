@@ -1,5 +1,7 @@
 package ru.yandex.praktikum;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
@@ -11,6 +13,7 @@ import ru.yandex.praktikum.api.pojo.user.UserReqJson;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
+@Feature("Логин пользователя")
 public class AuthUserTest {
 
     UserApiClient userApiClient;
@@ -24,6 +27,7 @@ public class AuthUserTest {
     }
 
     @Test
+    @DisplayName("Успешная авторизация под созданным пользователем")
     public void authorizationSuccessfulTest(){
         Response response = userApiClient.authorization(userReqJson);
 
@@ -36,6 +40,7 @@ public class AuthUserTest {
     }
 
     @Test
+    @DisplayName("Авторизация с неверным логином и паролем")
     public void authorizationWithInvalidData(){
         userReqJson.setName(GenerateData.generateName());
         userReqJson.setPassword(GenerateData.generatePassword());

@@ -1,5 +1,6 @@
 package ru.yandex.praktikum;
 
+import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.After;
@@ -12,6 +13,7 @@ import ru.yandex.praktikum.api.pojo.user.UserReqJson;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
+@Feature("Изменение данных пользователя")
 public class ChangeUserDataTest {
     UserApiClient userApiClient;
     UserReqJson userReqJson;
@@ -25,6 +27,7 @@ public class ChangeUserDataTest {
     }
 
     @Test
+    @DisplayName("Успешно изменение имени авторизованного пользователя")
     public void changeUserDataNameWithAuthTest() {
         userReqJson.setName(GenerateData.generateName());
         Response response = userApiClient.changeDataUser(userReqJson);
@@ -37,6 +40,7 @@ public class ChangeUserDataTest {
     }
 
     @Test
+    @DisplayName("Успешно изменение почты авторизованного пользователя")
     public void changeUserDataEmailWithAuthTest() {
         userReqJson.setEmail(GenerateData.generateEmail());
         Response response = userApiClient.changeDataUser(userReqJson);
@@ -49,9 +53,11 @@ public class ChangeUserDataTest {
     }
 
     @Test
+    @DisplayName("Изменение имени неавторизованного пользователя")
     public void changeUserDataNameWithoutAuthTest() {
         userReqJson.setName(GenerateData.generateName());
         userApiClient.clearToken();
+
         Response response = userApiClient.changeDataUser(userReqJson);
 
         response.then()
@@ -62,6 +68,7 @@ public class ChangeUserDataTest {
     }
 
     @Test
+    @DisplayName("Изменение почты неавторизованного пользователя")
     public void changeUserDataEmailWithoutAuthTest() {
         String emailBefore = userReqJson.getEmail();
         userReqJson.setEmail(GenerateData.generateEmail());
