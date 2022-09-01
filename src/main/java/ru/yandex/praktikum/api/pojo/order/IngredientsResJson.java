@@ -3,8 +3,8 @@ package ru.yandex.praktikum.api.pojo.order;
 import java.util.ArrayList;
 
 public class IngredientsResJson {
-    public boolean success;
-    public ArrayList<DataJson> data;
+    private boolean success;
+    private ArrayList<DataJson> data;
 
     public IngredientsResJson() {
     }

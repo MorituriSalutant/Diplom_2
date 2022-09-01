@@ -3,7 +3,7 @@ package ru.yandex.praktikum.api.pojo.order;
 import java.util.List;
 
 public class OrderReqJson {
-    public List<String> ingredients;
+    private List<String> ingredients;
 
     public OrderReqJson() {
     }
